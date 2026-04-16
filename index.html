@@ -327,19 +327,19 @@
             margin-top: 30px;
             -webkit-overflow-scrolling: touch;
             
-            /* --- Centering Logic --- */
+            /* --- Fixed Centering Logic --- */
             display: flex;
-            justify-content: center; /* Centers image if it fits */
-            scroll-snap-type: x mandatory; /* Helps with centering on mobile */
+            justify-content: flex-start; /* Start from the edge to allow full scroll */
+            scroll-snap-type: x mandatory;
             position: relative;
         }
 
         .scroll-container img {
-            min-width: 800px; /* Slightly wider to ensure there is something to swipe */
+            min-width: 1000px; /* Increased slightly for better mobile feel */
             width: 100%;
             display: block;
             flex-shrink: 0;
-            scroll-snap-align: center; /* Forces the browser to snap to the center */
+            scroll-snap-align: center;
         }
 
         /* --- Mobile Swipe Indicators --- */
@@ -555,11 +555,15 @@
         link.addEventListener('click', () => { navList.classList.remove('active'); });
     });
 
-    // Center the consortium photo on load
-    const scrollContainer = document.querySelector('#scroll-target');
     window.addEventListener('load', () => {
-        const center = (scrollContainer.scrollWidth - scrollContainer.clientWidth) / 2;
-        scrollContainer.scrollTo({ left: center, behavior: 'smooth' });
+        const scrollContainer = document.querySelector('#scroll-target');
+        if (scrollContainer) {
+            // Calculate the midpoint: (Total Width - Visible Width) / 2
+            const centerPosition = (scrollContainer.scrollWidth - scrollContainer.offsetWidth) / 2;
+            
+            // Instantly jump to center on load
+            scrollContainer.scrollLeft = centerPosition;
+        }
     });
 </script>
 
