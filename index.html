@@ -197,6 +197,8 @@
         .affiliation-box img {
             max-height: 42px;
             max-width: 100%;
+            filter: grayscale(100%);
+            opacity: 0.6;
             object-fit: contain;
         }
 
@@ -297,8 +299,18 @@
             z-index: 2;
             pointer-events: none;
         }
-        .institute-banner::before { left: 0; background: linear-gradient(to right, white 0%, transparent 100%); }
-        .institute-banner::after { right: 0; background: linear-gradient(to left, white 0%, transparent 100%); }
+
+        /* Change 'white' to 'transparent' to show the hero background through the fade */
+        .institute-banner::before { 
+            left: 0; 
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 100%); 
+            /* Wait, actually better to just remove the white color entirely: */
+        }
+
+        .institute-banner::after { 
+            right: 0; 
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 100%); 
+        }
 
         @media (max-width: 768px) {
             .logo-slide { width: 180px; padding: 0 20px; }
@@ -357,13 +369,13 @@
 
         <div class="institute-banner">
             <div class="logo-track">
-                <div class="logo-slide"><img src="logos/tud.jpg" alt="TU Delft"></div>
+                <div class="logo-slide"><img src="logos/tud.png" alt="TU Delft"></div>
                 <div class="logo-slide"><img src="logos/ut.png" alt="UTwente"></div>
                 <div class="logo-slide"><img src="logos/tue.png" alt="TU/e"></div>
                 <div class="logo-slide"><img src="logos/mu.png" alt="Maastricht"></div>
                 <div class="logo-slide"><img src="logos/rug.png" alt="Groningen"></div>
                 <div class="logo-slide"><img src="logos/uva.png" alt="UvA"></div>                
-                <div class="logo-slide"><img src="logos/tud.jpg" alt="TU Delft"></div>
+                <div class="logo-slide"><img src="logos/tud.png" alt="TU Delft"></div>
                 <div class="logo-slide"><img src="logos/ut.png" alt="UTwente"></div>
                 <div class="logo-slide"><img src="logos/tue.png" alt="TU/e"></div>
                 <div class="logo-slide"><img src="logos/mu.png" alt="Maastricht"></div>
@@ -442,7 +454,7 @@
         <div class="card">
             <img src="photos/frankgijsen.jpeg" alt="Frank Gijsen" class="profile-pic">
             <h3>Frank Gijsen</h3>
-            <div class="affiliation-box"><img src="logos/tud.jpg" alt="TU Delft"></div>
+            <div class="affiliation-box"><img src="logos/tud.png" alt="TU Delft"></div>
         </div>
         <a href="https://www.utwente.nl/en/eemcs/mia/" class="card">
             <img src="photos/jelmerwolterink.jpg" alt="Jelmer Wolterink" class="profile-pic">
