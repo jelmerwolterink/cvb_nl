@@ -52,7 +52,7 @@
             text-decoration: none;
             color: var(--text-main);
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 1.0rem;
             transition: var(--transition);
             opacity: 0.8;
         }
@@ -238,6 +238,93 @@
             transition: var(--transition);
         }
         .btn:hover { transform: scale(1.05); background: var(--accent); }
+
+        .institute-banner {
+        width: 100%;
+        max-width: 1200px;
+        margin: 50px auto 0;
+        padding: 20px 0;
+        overflow: hidden;
+        position: relative;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* The "infinite" track */
+        .logo-track {
+            display: flex;
+            width: calc(250px * 14); /* 7 logos * 2 for seamless loop */
+            animation: scroll 30s linear infinite;
+        }
+
+        .logo-track:hover {
+            animation-play-state: paused;
+        }
+
+        .logo-slide {
+            width: 250px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 40px;
+        }
+
+        .logo-slide img {
+            max-height: 45px;
+            max-width: 100%;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+
+        .logo-slide img:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 7)); }
+        }
+
+        /* Gradient masks to fade logos in and out at the edges */
+        .institute-banner::before,
+        .institute-banner::after {
+            content: "";
+            height: 100%;
+            position: absolute;
+            width: 150px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .institute-banner::before { left: 0; background: linear-gradient(to right, white 0%, transparent 100%); }
+        .institute-banner::after { right: 0; background: linear-gradient(to left, white 0%, transparent 100%); }
+
+        @media (max-width: 768px) {
+            .logo-slide { width: 180px; padding: 0 20px; }
+            .logo-track { width: calc(180px * 14); }
+            @keyframes scroll {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(-180px * 7)); }
+            }
+        }
+        .scroll-container {
+            width: 100%;
+            overflow-x: auto; /* Enables horizontal swiping */
+            border-radius: 20px;
+            margin-top: 30px;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iPhones */
+        }
+        .scroll-container img {
+            min-width: 600px; /* Ensures it stays wide enough to scroll on small screens */
+            width: 100%;
+            display: block;
+        }
+
+        /* Hide the scrollbar for a cleaner look */
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -256,14 +343,33 @@
 </nav>
 
 <header class="hero">
-    <div class="hero-content">
-        <div>
-            <h1>Engineering the Future of Cardiovascular Health.</h1>
-            <p>CVB_NL is the Dutch national cardiovascular biomechanics consortium dedicated to bridging the gap between biomechanical engineering and clinical excellence.</p>
-            <a href="#consortium" class="btn">Meet the consortium</a>
+    <div style="max-width: 1200px; width: 100%;">
+        <div class="hero-content">
+            <div>
+                <h1>Engineering the Future of Cardiovascular Health.</h1>
+                <p>CVB_NL is the Dutch national cardiovascular biomechanics consortium dedicated to bridging the gap between biomechanical engineering and clinical excellence.</p>
+                <!-- <a href="#consortium" class="btn">Meet the consortium</a> -->
+            </div>
+            <div style="text-align: right;">
+                <img src="logo.png" alt="CVB_NL Logo" width="100%" style="max-width: 400px; opacity: 0.9;">
+            </div>
         </div>
-        <div style="text-align: right;">
-            <img src="logo.png" alt="Cardiovascular Biomechanics Netherlands (CVB_NL) Logo" width="100%" style="max-width: 400px; opacity: 0.9;">
+
+        <div class="institute-banner">
+            <div class="logo-track">
+                <div class="logo-slide"><img src="logos/tud.jpg" alt="TU Delft"></div>
+                <div class="logo-slide"><img src="logos/ut.png" alt="UTwente"></div>
+                <div class="logo-slide"><img src="logos/tue.png" alt="TU/e"></div>
+                <div class="logo-slide"><img src="logos/mu.png" alt="Maastricht"></div>
+                <div class="logo-slide"><img src="logos/rug.png" alt="Groningen"></div>
+                <div class="logo-slide"><img src="logos/uva.png" alt="UvA"></div>                
+                <div class="logo-slide"><img src="logos/tud.jpg" alt="TU Delft"></div>
+                <div class="logo-slide"><img src="logos/ut.png" alt="UTwente"></div>
+                <div class="logo-slide"><img src="logos/tue.png" alt="TU/e"></div>
+                <div class="logo-slide"><img src="logos/mu.png" alt="Maastricht"></div>
+                <div class="logo-slide"><img src="logos/rug.png" alt="Groningen"></div>
+                <div class="logo-slide"><img src="logos/uva.png" alt="UvA"></div>
+            </div>
         </div>
     </div>
 </header>
@@ -322,8 +428,11 @@
             <li style="margin-bottom: 15px;"><i class="fas fa-check-circle" style="color: #28a745; margin-right: 10px;"></i> <strong>April 2026:</strong> Meeting &mdash; TU Eindhoven</li>
             <li><i class="fas fa-check-circle" style="color: #28a745; margin-right: 10px;"></i> <strong>November 2025:</strong> Meeting &mdash; TU Delft</li>
         </ul>
-        <a href="#" style="color: var(--accent); font-weight: 700; text-decoration: none; display: block; margin-top: 30px;">Join our Google Group to stay informed &rarr;</a>
-        <img src="photos/consortium.jpeg" alt="Consortium Meeting" style="width: 100%; border-radius: 20px; margin-top: 30px; object-fit: cover; max-height: 400px;">
+        <a href="https://groups.google.com/u/0/g/cvb-nl" style="color: var(--accent); font-weight: 700; text-decoration: none; display: block; margin-top: 30px;">Join our Google Group to stay informed &rarr;</a>
+        <!-- <img src="photos/consortium.jpeg" alt="Consortium Meeting" style="width: 100%; border-radius: 20px; margin-top: 30px; object-fit: cover; max-height: 400px;"> -->
+        <div class="scroll-container">
+            <img src="photos/consortium.jpeg" alt="Consortium Meeting">
+        </div>
     </div>
 </section>
 
