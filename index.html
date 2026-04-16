@@ -18,7 +18,7 @@
     --bg-light: #f5f5f7;
     --white: #ffffff;
     --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    --arrow-opacity: 0.8; /* Variable for reactive swipe indicators */
+    --arrow-opacity: 0.8;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -99,6 +99,7 @@ nav {
     letter-spacing: -1px;
 }
 
+/* --- Banner with Gap-based Logic (Fixes Overlap) --- */
 .institute-banner {
     width: 100%;
     max-width: 1200px;
@@ -113,22 +114,23 @@ nav {
 
 .logo-track {
     display: flex;
-    width: calc(250px * 14);
-    animation: scroll 50s linear infinite;
+    align-items: center;
+    gap: 80px; /* Consistent spacing prevents overlap */
+    width: max-content;
+    animation: scroll 40s linear infinite;
     will-change: transform;
 }
 
 .logo-slide {
-    width: 250px;
-    height: 60px;
+    flex-shrink: 0;
+    height: 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 0 40px;
 }
 
 .logo-slide img {
-    max-height: 40px;
+    max-height: 45px;
+    width: auto;
     filter: grayscale(100%);
     opacity: 0.5;
     transition: var(--transition);
@@ -138,7 +140,7 @@ nav {
 
 @keyframes scroll {
     0% { transform: translateX(0); }
-    100% { transform: translateX(calc(-250px * 7)); }
+    100% { transform: translateX(-50%); } /* Perfect infinite loop */
 }
 
 /* --- Content Sections --- */
@@ -185,7 +187,6 @@ section { padding: 100px 8%; max-width: 1400px; margin: 0 auto; }
     display: block;
     flex-shrink: 0;
     scroll-snap-align: center;
-    transition: var(--transition);
 }
 
 .scroll-container::-webkit-scrollbar { display: none; }
@@ -215,17 +216,12 @@ section { padding: 100px 8%; max-width: 1400px; margin: 0 auto; }
     }
     .nav-links.active { display: flex; }
     
-    /* Faster Banner Scroll on Mobile */
+    /* Faster & Cleaner Mobile Scroll */
     .logo-track {
-        animation-duration: 25s; 
-        width: calc(180px * 14); 
+        gap: 50px;
+        animation-duration: 22s; 
     }
-    .logo-slide { width: 180px; padding: 0 20px; }
-    
-    @keyframes scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-180px * 7)); }
-    }
+    .logo-slide img { max-height: 35px; }
 
     /* Swipe Arrows Indicators */
     .scroll-wrapper::before,
