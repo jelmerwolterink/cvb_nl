@@ -246,6 +246,28 @@ section { padding: 100px 8%; max-width: 1400px; margin: 0 auto; }
 }
 
 footer { background: var(--primary); color: var(--white); padding: 60px 8%; text-align: center; }
+
+#focus {
+    background: var(--bg-light);
+    border-radius: 60px;
+    /* This centers the section block itself */
+    margin: 40px auto !important; 
+    /* This ensures the content inside is centered */
+    text-align: center; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#focus .research-grid {
+    width: 100%;
+    text-align: left; /* Keeps the text inside cards readable */
+}
+
+#focus .section-title, #focus p {
+    text-align: center;
+}
+
     </style>
 </head>
 <body>
@@ -307,7 +329,7 @@ footer { background: var(--primary); color: var(--white); padding: 60px 8%; text
     </p>
 </section>
 
-<section id="focus" style="background: var(--bg-light); border-radius: 60px; margin: 0 4%;">
+<section id="focus">
     <h2 class="section-title" style="margin-bottom: 3rem;">Research Scope</h2>
     <p style="margin-bottom: 40px; color: var(--text-sub); max-width: 800px;">
         Our consortium integrates expertise across cardiovascular biomechanics to drive clinical innovation in the Netherlands. Research domains include but are not limited to:
