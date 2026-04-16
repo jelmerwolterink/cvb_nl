@@ -322,21 +322,67 @@
         }
         .scroll-container {
             width: 100%;
-            overflow-x: auto; /* Enables horizontal swiping */
-            border-radius: 20px;
+            overflow-x: auto;
+            border-radius: 24px;
             margin-top: 30px;
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iPhones */
-        }
-        .scroll-container img {
-            min-width: 600px; /* Ensures it stays wide enough to scroll on small screens */
-            width: 100%;
-            display: block;
+            -webkit-overflow-scrolling: touch;
+            
+            /* --- Centering Logic --- */
+            display: flex;
+            justify-content: center; /* Centers image if it fits */
+            scroll-snap-type: x mandatory; /* Helps with centering on mobile */
+            position: relative;
         }
 
-        /* Hide the scrollbar for a cleaner look */
-        .scroll-container::-webkit-scrollbar {
-            display: none;
+        .scroll-container img {
+            min-width: 800px; /* Slightly wider to ensure there is something to swipe */
+            width: 100%;
+            display: block;
+            flex-shrink: 0;
+            scroll-snap-align: center; /* Forces the browser to snap to the center */
         }
+
+        /* --- Mobile Swipe Indicators --- */
+        /* We create a wrapper to hold the arrows so they don't scroll with the image */
+        .scroll-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        /* Only show arrows on screens where the image is likely overflowing */
+        @media (max-width: 968px) {
+            .scroll-wrapper::before,
+            .scroll-wrapper::after {
+                font-family: "Font Awesome 6 Free";
+                font-weight: 900;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 5;
+                color: white;
+                background: rgba(0, 0, 0, 0.3);
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                pointer-events: none; /* User clicks through to the scroll layer */
+                opacity: 0.8;
+                animation: hintPulse 2s infinite;
+            }
+
+            .scroll-wrapper::before { content: "\f060"; left: 15px; } /* Left Arrow */
+            .scroll-wrapper::after { content: "\f061"; right: 15px; } /* Right Arrow */
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.5; }
+            50% { transform: translateY(-50%) scale(1.1); opacity: 0.9; }
+        }
+
+        .scroll-container::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
@@ -442,8 +488,10 @@
         </ul>
         <a href="https://groups.google.com/u/0/g/cvb-nl" style="color: var(--accent); font-weight: 700; text-decoration: none; display: block; margin-top: 30px;">Join our Google Group to stay informed &rarr;</a>
         <!-- <img src="photos/consortium.jpeg" alt="Consortium Meeting" style="width: 100%; border-radius: 20px; margin-top: 30px; object-fit: cover; max-height: 400px;"> -->
-        <div class="scroll-container">
-            <img src="photos/consortium.jpeg" alt="Consortium Meeting">
+        <div class="scroll-wrapper">
+            <div class="scroll-container" id="scroll-target">
+                <img src="photos/consortium.jpeg" alt="Consortium Meeting">
+            </div>
         </div>
     </div>
 </section>
@@ -505,6 +553,13 @@
     // Close mobile menu when a link is clicked
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => { navList.classList.remove('active'); });
+    });
+
+    // Center the consortium photo on load
+    const scrollContainer = document.querySelector('#scroll-target');
+    window.addEventListener('load', () => {
+        const center = (scrollContainer.scrollWidth - scrollContainer.clientWidth) / 2;
+        scrollContainer.scrollTo({ left: center, behavior: 'smooth' });
     });
 </script>
 
